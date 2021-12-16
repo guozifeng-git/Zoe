@@ -1,4 +1,4 @@
-package com.test.transactional;
+package com.test.alldemo;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

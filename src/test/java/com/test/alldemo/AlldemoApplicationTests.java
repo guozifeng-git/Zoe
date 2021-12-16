@@ -1,9 +1,9 @@
 package com.test.alldemo;
 
-import com.test.transactional.entity.User1;
-import com.test.transactional.entity.User2;
-import com.test.transactional.service.User1Service;
-import com.test.transactional.service.User2Service;
+import com.test.alldemo.entity.User1;
+import com.test.alldemo.entity.User2;
+import com.test.alldemo.service.User1Service;
+import com.test.alldemo.service.User2Service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

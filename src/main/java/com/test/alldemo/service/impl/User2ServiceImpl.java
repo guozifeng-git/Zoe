@@ -1,8 +1,8 @@
-package com.test.transactional.service.impl;
+package com.test.alldemo.service.impl;
 
-import com.test.transactional.entity.User2;
-import com.test.transactional.mapper.User2Mapper;
-import com.test.transactional.service.User2Service;
+import com.test.alldemo.entity.User2;
+import com.test.alldemo.mapper.User2Mapper;
+import com.test.alldemo.service.User2Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
