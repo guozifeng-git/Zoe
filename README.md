@@ -1,2 +1,1 @@
-# alldemo
-demo on com.test.alldemo.AlldemoApplicationTests
+# md on "com.test.allmd"
