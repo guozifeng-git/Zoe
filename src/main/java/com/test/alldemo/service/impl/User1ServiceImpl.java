@@ -19,4 +19,10 @@ public class User1ServiceImpl implements User1Service {
     public void addRequired(User1 user1) {
         user1Mapper.insert(user1);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addRequiresNew(User1 user){
+        user1Mapper.insert(user);
+    }
 }
