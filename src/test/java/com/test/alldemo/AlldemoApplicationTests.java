@@ -60,7 +60,7 @@ class AlldemoApplicationTests {
      * 开启外围事务(最常用的)，外围方法开启事务，内部方法加入外围方法事务，外围抛出RuntimeException回滚，内部也回滚
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_required(){
         User1 user1=new User1();
         user1.setName("zs");
@@ -79,7 +79,7 @@ class AlldemoApplicationTests {
      * 开启外围事务，内部方法加入外围方法事务,内部方法抛出异常后被外围方法感知，整体回滚
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception(){
         User1 user1=new User1();
         user1.setName("zs");
@@ -96,7 +96,7 @@ class AlldemoApplicationTests {
      * 外围方法开启事务，内部事务抛出异常后即使被catch不被外围事务感知，但仍然会回滚
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception_try(){
         User1 user1=new User1();
         user1.setName("zs");
@@ -152,7 +152,7 @@ class AlldemoApplicationTests {
      *外围开启方法，插入"zs"的内部方法加入外围事务（他的事务传播是Propagation.REQUIRED)，另外2个内部方法是自己的事务。
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_requiresNew_requiresNew(){
         User1 user1=new User1();
         user1.setName("zs");
@@ -174,7 +174,7 @@ class AlldemoApplicationTests {
      * 外围开启事务，插入"ww_new_exception"的方法抛出异常回滚，回滚抛出异常外围方法感知到也会回滚，所以插入"zs"也回滚
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception(){
         User1 user1=new User1();
         user1.setName("zs");
@@ -194,7 +194,7 @@ class AlldemoApplicationTests {
      *按理说应该是插入"ww_new_exception"的失败以后不会影响外围事务，但是实际上是会影响的
      */
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception_try(){
         User1 user1=new User1();
         user1.setName("zs");
