@@ -212,4 +212,88 @@ class AlldemoApplicationTests {
         }
     }
 
+    /**
+     * "zs_nested","ls_nested"都成功插入
+     * Propagation.NESTED修饰的内部方法属于外部事务的子事务，外围主事务回滚，子事务一定回滚，而内部子事务可以单独回滚而不影响外围主事务和其他子事务
+     * 在外围方法未开启事务的情况下Propagation.NESTED和Propagation.REQUIRED作用相同，修饰的内部方法都会新开启自己的事务，且开启的事务相互独立，互不干扰。
+     */
+    @Test
+    public void notransaction_exception_nested_nested(){
+        User1 user1=new User1();
+        user1.setName("zs_nested");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_nested");
+        user2Service.addNested(user2);
+        throw new RuntimeException();
+    }
+
+    /**
+     * "zs_nested"插入成功，"ls_nested_exception"插入失败
+     * Propagation.NESTED修饰的内部方法属于外部事务的子事务，外围主事务回滚，子事务一定回滚，而内部子事务可以单独回滚而不影响外围主事务和其他子事务
+     * 在外围方法未开启事务的情况下Propagation.NESTED和Propagation.REQUIRED作用相同，修饰的内部方法都会新开启自己的事务，且开启的事务相互独立，互不干扰。
+     */
+    @Test
+    public void notransaction_nested_nested_exception(){
+        User1 user1=new User1();
+        user1.setName("zs_nested");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_nested_exception");
+        user2Service.addNestedException(user2);
+    }
+
+    /**
+     * 都插入失败，两个内部方法会变成外围方法的子事务，外围方法回滚都回滚
+     */
+    @Test
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    public void transaction_exception_nested_nested(){
+        User1 user1=new User1();
+        user1.setName("zs_nested");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_nested");
+        user2Service.addNested(user2);
+        throw new RuntimeException();
+    }
+
+
+    /**
+     * 都会失败，内部抛出异常被外围方法感知，外围方法回滚所有都回滚
+     */
+    @Test
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    public void transaction_nested_nested_exception(){
+        User1 user1=new User1();
+        user1.setName("zs_nested");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_nested_exception");
+        user2Service.addNestedException(user2);
+    }
+
+    /**
+     * 这里也全部回滚了，按道理只应该回滚插入"ls_nested_exception_try"
+     */
+    @Test
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    public void transaction_nested_nested_exception_try(){
+        User1 user1=new User1();
+        user1.setName("zs_nested");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_nested_exception_try");
+        try {
+            user2Service.addNestedException(user2);
+        } catch (Exception e) {
+            log.info("RollBACK");
+        }
+    }
+
 }
