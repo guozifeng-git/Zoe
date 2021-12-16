@@ -1,7 +1,7 @@
-package com.test.alldemo.mapper;
+package com.test.transactional.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.test.alldemo.entity.User2;
+import com.test.transactional.entity.User2;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,8 +1,8 @@
-package com.test.alldemo.service.impl;
+package com.test.transactional.service.impl;
 
-import com.test.alldemo.entity.User1;
-import com.test.alldemo.mapper.User1Mapper;
-import com.test.alldemo.service.User1Service;
+import com.test.transactional.entity.User1;
+import com.test.transactional.mapper.User1Mapper;
+import com.test.transactional.service.User1Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

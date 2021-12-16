@@ -1,6 +1,6 @@
-package com.test.alldemo.service;
+package com.test.transactional.service;
 
-import com.test.alldemo.entity.User2;
+import com.test.transactional.entity.User2;
 
 public interface User2Service {
     void addRequired(User2 user);
