@@ -107,7 +107,7 @@ class AlldemoApplicationTests {
         try {
             user2Service.addRequiredException(user2);
         } catch (Exception e) {
-            log.info("方法回滚");
+            log.info("RollBACK");
         }
     }
 
@@ -131,7 +131,7 @@ class AlldemoApplicationTests {
     }
 
     /**
-     * "zs_new"插入成功，"ls_new"插入失败
+     * "zs_new"插入成功，"ls_new_exception"插入失败
      * Propagation_REQUIRES_NEW:创建新事务，无论当前存不存在事务，都创建新事务。
      * 外围不开启事务，2个插入方法分别开启自己的事务，插入"ls_new"方法抛出异常不会影响别的事务
      */
@@ -142,8 +142,74 @@ class AlldemoApplicationTests {
         user1Service.addRequiresNew(user1);
 
         User2 user2=new User2();
-        user2.setName("ls_new");
+        user2.setName("ls_new_exception");
         user2Service.addRequiresNewException(user2);
+    }
+
+    /**
+     * "zs"插入失败，其他两个插入成功
+     * Propagation_REQUIRES_NEW:创建新事务，无论当前存不存在事务，都创建新事务。
+     *外围开启方法，插入"zs"的内部方法加入外围事务（他的事务传播是Propagation.REQUIRED)，另外2个内部方法是自己的事务。
+     */
+    @Test
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void transaction_exception_required_requiresNew_requiresNew(){
+        User1 user1=new User1();
+        user1.setName("zs");
+        user1Service.addRequired(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_new");
+        user2Service.addRequiresNew(user2);
+
+        User2 user3=new User2();
+        user3.setName("ww_new");
+        user2Service.addRequiresNew(user3);
+        throw new RuntimeException();
+    }
+
+    /**
+     * "ls_new"插入成功，其他两个插入失败
+     *Propagation_REQUIRES_NEW:创建新事务，无论当前存不存在事务，都创建新事务。
+     * 外围开启事务，插入"ww_new_exception"的方法抛出异常回滚，回滚抛出异常外围方法感知到也会回滚，所以插入"zs"也回滚
+     */
+    @Test
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void transaction_required_requiresNew_requiresNew_exception(){
+        User1 user1=new User1();
+        user1.setName("zs");
+        user1Service.addRequired(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_new");
+        user2Service.addRequiresNew(user2);
+
+        User2 user3=new User2();
+        user3.setName("ww_new_exception");
+        user2Service.addRequiresNewException(user3);
+    }
+
+    /**
+     * 网上说："ww_new_exception"插入失败，其他两插入成功  实际情况："ls_new"插入成功其他失败
+     *按理说应该是插入"ww_new_exception"的失败以后不会影响外围事务，但是实际上是会影响的
+     */
+    @Test
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void transaction_required_requiresNew_requiresNew_exception_try(){
+        User1 user1=new User1();
+        user1.setName("zs");
+        user1Service.addRequired(user1);
+
+        User2 user2=new User2();
+        user2.setName("ls_new");
+        user2Service.addRequiresNew(user2);
+        User2 user3=new User2();
+        user3.setName("ww_new_exception");
+        try {
+            user2Service.addRequiresNewException(user3);
+        } catch (Exception e) {
+            log.info("RollBACK");
+        }
     }
 
 }
