@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 @Slf4j
@@ -60,6 +61,7 @@ class AlldemoApplicationTests {
      * 开启外围事务(最常用的)，外围方法开启事务，内部方法加入外围方法事务，外围抛出RuntimeException回滚，内部也回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_required(){
         User1 user1=new User1();
@@ -79,6 +81,7 @@ class AlldemoApplicationTests {
      * 开启外围事务，内部方法加入外围方法事务,内部方法抛出异常后被外围方法感知，整体回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception(){
         User1 user1=new User1();
@@ -96,6 +99,7 @@ class AlldemoApplicationTests {
      * 外围方法开启事务，内部事务抛出异常后即使被catch不被外围事务感知，但仍然会回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception_try(){
         User1 user1=new User1();
@@ -152,6 +156,7 @@ class AlldemoApplicationTests {
      *外围开启方法，插入"zs"的内部方法加入外围事务（他的事务传播是Propagation.REQUIRED)，另外2个内部方法是自己的事务。
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_requiresNew_requiresNew(){
         User1 user1=new User1();
@@ -174,6 +179,7 @@ class AlldemoApplicationTests {
      * 外围开启事务，插入"ww_new_exception"的方法抛出异常回滚，回滚抛出异常外围方法感知到也会回滚，所以插入"zs"也回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception(){
         User1 user1=new User1();
@@ -192,8 +198,10 @@ class AlldemoApplicationTests {
     /**
      * 网上说："ww_new_exception"插入失败，其他两插入成功  实际情况："ls_new"插入成功其他失败
      *按理说应该是插入"ww_new_exception"的失败以后不会影响外围事务，但是实际上是会影响的
+     * 加@Rollback(value = false)后正常，springboot为了不让test中的操作造成脏数据的形成
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception_try(){
         User1 user1=new User1();
@@ -249,6 +257,7 @@ class AlldemoApplicationTests {
      * 都插入失败，两个内部方法会变成外围方法的子事务，外围方法回滚都回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_nested_nested(){
         User1 user1=new User1();
@@ -266,6 +275,7 @@ class AlldemoApplicationTests {
      * 都会失败，内部抛出异常被外围方法感知，外围方法回滚所有都回滚
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_nested_nested_exception(){
         User1 user1=new User1();
@@ -279,8 +289,10 @@ class AlldemoApplicationTests {
 
     /**
      * 这里也全部回滚了，按道理只应该回滚插入"ls_nested_exception_try"
+     * 加@Rollback(value = false)后正常，springboot为了不让test中的操作造成脏数据的形成
      */
     @Test
+    @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_nested_nested_exception_try(){
         User1 user1=new User1();
