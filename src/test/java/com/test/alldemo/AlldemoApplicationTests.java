@@ -1,7 +1,7 @@
 package com.test.alldemo;
 
-import com.test.alldemo.entity.User1;
-import com.test.alldemo.entity.User2;
+import com.test.alldemo.entity.User1DO;
+import com.test.alldemo.entity.User2DO;
 import com.test.alldemo.service.User1Service;
 import com.test.alldemo.service.User2Service;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +29,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_exception_required_required() {
-        User1 user1 = new User1();
-        user1.setName("22");
-        user1Service.addRequired(user1);
+        User1DO user1DO = new User1DO();
+        user1DO.setName("22");
+        user1Service.addRequired(user1DO);
 
-        User2 user2 = new User2();
-        user2.setName("33");
-        user2Service.addRequired(user2);
+        User2DO user2DO = new User2DO();
+        user2DO.setName("33");
+        user2Service.addRequired(user2DO);
 
         throw new RuntimeException();
     }
@@ -46,13 +46,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_required_required_exception() {
-        User1 user1 = new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO = new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2 = new User2();
-        user2.setName("ls");
-        user2Service.addRequiredException(user2);
+        User2DO user2DO = new User2DO();
+        user2DO.setName("ls");
+        user2Service.addRequiredException(user2DO);
     }
 
     /**
@@ -64,13 +64,13 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_required(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls");
-        user2Service.addRequired(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls");
+        user2Service.addRequired(user2DO);
 
         throw new RuntimeException();
     }
@@ -84,13 +84,13 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls");
-        user2Service.addRequiredException(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls");
+        user2Service.addRequiredException(user2DO);
     }
 
     /**
@@ -102,14 +102,14 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_required_exception_try(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls");
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls");
         try {
-            user2Service.addRequiredException(user2);
+            user2Service.addRequiredException(user2DO);
         } catch (Exception e) {
             log.info("RollBACK");
         }
@@ -123,13 +123,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_exception_requiresNew_requiresNew(){
-        User1 user1=new User1();
-        user1.setName("zs_new");
-        user1Service.addRequiresNew(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_new");
+        user1Service.addRequiresNew(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_new");
-        user2Service.addRequiresNew(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_new");
+        user2Service.addRequiresNew(user2DO);
         throw new RuntimeException();
 
     }
@@ -141,13 +141,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_requiresNew_requiresNew_exception(){
-        User1 user1=new User1();
-        user1.setName("zs_new");
-        user1Service.addRequiresNew(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_new");
+        user1Service.addRequiresNew(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_new_exception");
-        user2Service.addRequiresNewException(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_new_exception");
+        user2Service.addRequiresNewException(user2DO);
     }
 
     /**
@@ -159,15 +159,15 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_required_requiresNew_requiresNew(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_new");
-        user2Service.addRequiresNew(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_new");
+        user2Service.addRequiresNew(user2DO);
 
-        User2 user3=new User2();
+        User2DO user3=new User2DO();
         user3.setName("ww_new");
         user2Service.addRequiresNew(user3);
         throw new RuntimeException();
@@ -182,15 +182,15 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_new");
-        user2Service.addRequiresNew(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_new");
+        user2Service.addRequiresNew(user2DO);
 
-        User2 user3=new User2();
+        User2DO user3=new User2DO();
         user3.setName("ww_new_exception");
         user2Service.addRequiresNewException(user3);
     }
@@ -204,14 +204,14 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_required_requiresNew_requiresNew_exception_try(){
-        User1 user1=new User1();
-        user1.setName("zs");
-        user1Service.addRequired(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs");
+        user1Service.addRequired(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_new");
-        user2Service.addRequiresNew(user2);
-        User2 user3=new User2();
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_new");
+        user2Service.addRequiresNew(user2DO);
+        User2DO user3=new User2DO();
         user3.setName("ww_new_exception");
         try {
             user2Service.addRequiresNewException(user3);
@@ -227,13 +227,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_exception_nested_nested(){
-        User1 user1=new User1();
-        user1.setName("zs_nested");
-        user1Service.addNested(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_nested");
+        user1Service.addNested(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_nested");
-        user2Service.addNested(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_nested");
+        user2Service.addNested(user2DO);
         throw new RuntimeException();
     }
 
@@ -244,13 +244,13 @@ class AlldemoApplicationTests {
      */
     @Test
     public void notransaction_nested_nested_exception(){
-        User1 user1=new User1();
-        user1.setName("zs_nested");
-        user1Service.addNested(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_nested");
+        user1Service.addNested(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_nested_exception");
-        user2Service.addNestedException(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_nested_exception");
+        user2Service.addNestedException(user2DO);
     }
 
     /**
@@ -260,13 +260,13 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_exception_nested_nested(){
-        User1 user1=new User1();
-        user1.setName("zs_nested");
-        user1Service.addNested(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_nested");
+        user1Service.addNested(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_nested");
-        user2Service.addNested(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_nested");
+        user2Service.addNested(user2DO);
         throw new RuntimeException();
     }
 
@@ -278,13 +278,13 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_nested_nested_exception(){
-        User1 user1=new User1();
-        user1.setName("zs_nested");
-        user1Service.addNested(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_nested");
+        user1Service.addNested(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_nested_exception");
-        user2Service.addNestedException(user2);
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_nested_exception");
+        user2Service.addNestedException(user2DO);
     }
 
     /**
@@ -295,14 +295,14 @@ class AlldemoApplicationTests {
     @Rollback(value = false)
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
     public void transaction_nested_nested_exception_try(){
-        User1 user1=new User1();
-        user1.setName("zs_nested");
-        user1Service.addNested(user1);
+        User1DO user1DO =new User1DO();
+        user1DO.setName("zs_nested");
+        user1Service.addNested(user1DO);
 
-        User2 user2=new User2();
-        user2.setName("ls_nested_exception_try");
+        User2DO user2DO =new User2DO();
+        user2DO.setName("ls_nested_exception_try");
         try {
-            user2Service.addNestedException(user2);
+            user2Service.addNestedException(user2DO);
         } catch (Exception e) {
             log.info("RollBACK");
         }

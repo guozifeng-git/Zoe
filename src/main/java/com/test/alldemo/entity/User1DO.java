@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
-public class User2 {
+public class User1DO {
     @TableId(value="id",type= IdType.AUTO)
     private Integer id;
     private String name;
