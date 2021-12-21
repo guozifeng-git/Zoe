@@ -1,7 +1,7 @@
 package com.test.alldemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.test.alldemo.entity.User1DO;
+import com.test.alldemo.entity.Transactional.User1DO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

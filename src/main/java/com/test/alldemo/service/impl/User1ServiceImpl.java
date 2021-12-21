@@ -1,6 +1,6 @@
 package com.test.alldemo.service.impl;
 
-import com.test.alldemo.entity.User1DO;
+import com.test.alldemo.entity.Transactional.User1DO;
 import com.test.alldemo.mapper.User1Mapper;
 import com.test.alldemo.service.User1Service;
 import org.springframework.beans.factory.annotation.Autowired;

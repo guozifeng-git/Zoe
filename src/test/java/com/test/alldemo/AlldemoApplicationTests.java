@@ -1,7 +1,7 @@
 package com.test.alldemo;
 
-import com.test.alldemo.entity.User1DO;
-import com.test.alldemo.entity.User2DO;
+import com.test.alldemo.entity.Transactional.User1DO;
+import com.test.alldemo.entity.Transactional.User2DO;
 import com.test.alldemo.service.User1Service;
 import com.test.alldemo.service.User2Service;
 import lombok.extern.slf4j.Slf4j;
