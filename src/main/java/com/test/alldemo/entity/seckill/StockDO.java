@@ -2,15 +2,16 @@ package com.test.alldemo.entity.seckill;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
  * @author admin
  */
 @Data
+@TableName("stock")
 public class StockDO {
-    //雪花
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String name;
     private Integer count;

@@ -8,7 +8,7 @@ public interface SeckillService {
 
     StockDO checkStock(int sid);
 
-    int saleStock(StockDO stock);
+    void saleStock(StockDO stock);
 
     int createOrder(StockDO stock);
 

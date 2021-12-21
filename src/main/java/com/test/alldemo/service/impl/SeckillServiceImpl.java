@@ -4,17 +4,22 @@ import com.test.alldemo.entity.ErrorCodeEnum;
 import com.test.alldemo.entity.seckill.StockDO;
 import com.test.alldemo.entity.seckill.StockOrderDO;
 import com.test.alldemo.exception.CustomException;
-import com.test.alldemo.mapper.SeckillMapper;
+import com.test.alldemo.mapper.StockMapper;
+import com.test.alldemo.mapper.StockOrderMapper;
 import com.test.alldemo.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-
+@Service
 public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
-    SeckillMapper seckillMapper;
+    StockMapper stockMapper;
+
+    @Autowired
+    StockOrderMapper stockOrderMapper;
 
     @Override
     public int createWrongOrder(int sid) {
@@ -29,7 +34,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public StockDO checkStock(int sid) {
-        StockDO stockDO = seckillMapper.selectById(sid);
+        StockDO stockDO = stockMapper.selectById(sid);
         if (stockDO.getCount().equals(stockDO.getSale())){
             throw new CustomException(ErrorCodeEnum.STOCK_NOT_ENOUGH);
         }
@@ -37,16 +42,17 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
-    public int saleStock(StockDO stock) {
+    public void saleStock(StockDO stock) {
         stock.setSale(stock.getSale()+1);
-        seckillMapper.updateById(stock);
+        stockMapper.updateById(stock);
     }
 
     @Override
     public int createOrder(StockDO stock) {
         StockOrderDO stockOrderDO = new StockOrderDO();
         stockOrderDO.setSid(stock.getId());
-        stockOrderDO.setName(stock.getName(););
+        stockOrderDO.setName(stock.getName());
         stockOrderDO.setCreateTime(new Date());
+        return stockOrderMapper.insert(stockOrderDO);
     }
 }

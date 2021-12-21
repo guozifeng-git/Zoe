@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.test.alldemo.entity.seckill.StockDO;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author admin
+ */
 @Mapper
-@TableName("stock")
-public interface SeckillMapper extends BaseMapper<StockDO> {
+public interface StockMapper extends BaseMapper<StockDO> {
 }
