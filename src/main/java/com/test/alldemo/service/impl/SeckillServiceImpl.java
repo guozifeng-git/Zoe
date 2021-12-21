@@ -9,6 +9,8 @@ import com.test.alldemo.mapper.StockOrderMapper;
 import com.test.alldemo.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -35,7 +37,7 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     public StockDO checkStock(int sid) {
         StockDO stockDO = stockMapper.selectById(sid);
-        if (stockDO.getCount().equals(stockDO.getSale())){
+        if (stockDO.getCount().equals(stockDO.getSale())) {
             throw new CustomException(ErrorCodeEnum.STOCK_NOT_ENOUGH);
         }
         return stockDO;
@@ -43,7 +45,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public void saleStock(StockDO stock) {
-        stock.setSale(stock.getSale()+1);
+        stock.setSale(stock.getSale() + 1);
         stockMapper.updateById(stock);
     }
 
@@ -53,6 +55,26 @@ public class SeckillServiceImpl implements SeckillService {
         stockOrderDO.setSid(stock.getId());
         stockOrderDO.setName(stock.getName());
         stockOrderDO.setCreateTime(new Date());
-        return stockOrderMapper.insert(stockOrderDO);
+        stockOrderMapper.insert(stockOrderDO);
+        return stock.getCount() - (stock.getSale())-1;
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    @Override
+    public int createOptimisticOrder(int sid) {
+        //校验库存
+        StockDO stock = checkStock(sid);
+        //扣库存
+        saleOptimisticStock(stock);
+        //创建订单
+        return createOrder(stock);
+    }
+
+    @Override
+    public void saleOptimisticStock(StockDO stock) {
+        Integer integer = stockMapper.updateSale(stock.getId(), stock.getSale() + 1, stock.getVersion());
+        if (integer != 1) {
+            throw new CustomException(ErrorCodeEnum.TRY_ACQUIRE_FAIL);
+        }
     }
 }

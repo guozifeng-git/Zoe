@@ -11,7 +11,8 @@ import lombok.Getter;
 @Getter
 public enum ErrorCodeEnum {
     //
-    STOCK_NOT_ENOUGH("1","库存不足")
+    STOCK_NOT_ENOUGH("1","库存不足"),
+    TRY_ACQUIRE_FAIL("2","获取锁失败")
     ;
 
     @EnumValue

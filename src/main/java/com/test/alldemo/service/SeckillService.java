@@ -12,4 +12,8 @@ public interface SeckillService {
 
     int createOrder(StockDO stock);
 
+    int createOptimisticOrder(int sid);
+
+    void saleOptimisticStock(StockDO stock);
+
 }
