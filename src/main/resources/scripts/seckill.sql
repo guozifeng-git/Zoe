@@ -23,4 +23,22 @@ CREATE TABLE `stock_order` (
                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of iphone
+-- ----------------------------
 INSERT INTO stock (`name`,count,sale,version) VALUES('iphone',100,0,0);
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+                        `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                        `user_name` varchar(255) NOT NULL DEFAULT '',
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', '张三');
