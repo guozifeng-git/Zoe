@@ -36,7 +36,7 @@ public class SeckillController {
         int id = 0;
         try {
             id = seckillService.createWrongOrder(sid);
-            log.info("创建订单id: [{}]", id);
+            log.info("Create orderId: [{}]", id);
         } catch (Exception e) {
             log.error("Exception", e);
         }
@@ -52,18 +52,18 @@ public class SeckillController {
     @GetMapping("/createOptimisticOrder")
     public String createOptimisticOrder(@RequestParam("sid") int sid) {
         if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
-            log.warn("你被限流了，真不幸，直接返回失败");
-            return "购买失败，库存不足";
+            log.warn("Current limit, return failure");
+            return "Purchase failure, insufficient inventory";
         }
         int surplusOrder;
         try {
             surplusOrder = seckillService.createOptimisticOrder(sid);
-            log.info("购买成功，剩余库存为: [{}]", surplusOrder);
+            log.info("Purchase succeeded, remaining inventory is: [{}]", surplusOrder);
         } catch (Exception e) {
-            log.error("购买失败：[{}]", e.getMessage());
-            return "购买失败，库存不足";
+            log.error("Purchase failed：[{}]", e.getMessage());
+            return "Purchase failure, insufficient inventory";
         }
-        return String.format("购买成功，剩余库存为：%d", surplusOrder);
+        return String.format("Purchase succeeded, remaining inventory is：%d", surplusOrder);
     }
 
 
