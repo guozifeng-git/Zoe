@@ -1,12 +1,12 @@
 package com.test.alldemo.service.impl;
 
 import com.test.alldemo.constants.Cachekey;
+import com.test.alldemo.constants.SeckillConstants;
 import com.test.alldemo.entity.ErrorCodeEnum;
 import com.test.alldemo.entity.seckill.StockDO;
 import com.test.alldemo.entity.seckill.UserDO;
 import com.test.alldemo.exception.CustomException;
 import com.test.alldemo.mapper.StockMapper;
-import com.test.alldemo.mapper.StockOrderMapper;
 import com.test.alldemo.mapper.UserMapper;
 import com.test.alldemo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    private static final String SALT = "randomString";
+
+
 
     @Override
     public String getVerifyHash(Integer sid, Integer userId) {
@@ -46,11 +47,36 @@ public class UserServiceImpl implements UserService {
         }
         log.info("Commodity information：[{}]", stockDO.toString());
 
-        String salt = SALT + sid + userId;
+        String salt = SeckillConstants.SALT+ sid + userId;
         String key = Cachekey.SECKILL + sid + ":" + userId;
         String value = DigestUtils.md5DigestAsHex(salt.getBytes(StandardCharsets.UTF_8));
         redisTemplate.opsForValue().set(key, value, 3600, TimeUnit.SECONDS);
         log.info("Redis write in：[{}] [{}]", key, value);
         return value;
+    }
+
+    @Override
+    public int addUserCount(Integer userId) {
+        String key = Cachekey.ACCESS_FREQUENCY + userId;
+        String value = redisTemplate.opsForValue().get(key);
+        int count = 0;
+        if (value == null) {
+            redisTemplate.opsForValue().set(key, "0", 3600, TimeUnit.SECONDS);
+        } else {
+            count = Integer.parseInt(value) + 1;
+            redisTemplate.opsForValue().set(key, String.valueOf(count),3600,TimeUnit.SECONDS);
+        }
+        return count;
+    }
+
+    @Override
+    public boolean getUserIsBanned(Integer userId) {
+        String key = Cachekey.ACCESS_FREQUENCY+userId;
+        String accessNum = redisTemplate.opsForValue().get(key);
+        if (accessNum == null) {
+            log.error("The user did not access the request authentication value record");
+            return true;
+        }
+        return Integer.parseInt(accessNum) > SeckillConstants.MAX_NUM;
     }
 }

@@ -103,4 +103,30 @@ public class SeckillController {
         return String.format("Purchase succeeded, remaining inventory is：%d", stockLeft);
     }
 
+    /**
+     * 要求验证的抢购接口 + 单用户限制访问频率
+     * @param sid
+     * @return
+     */
+    @GetMapping("/createOrderWithVerifiedUrlAndLimit")
+    public String createOrderWithVerifiedUrlAndLimit(@RequestParam(value = "sid") Integer sid,
+                                                     @RequestParam(value = "userId") Integer userId,
+                                                     @RequestParam(value = "verifyHash") String verifyHash) {
+        int stockLeft;
+        try {
+            int count = userService.addUserCount(userId);
+            log.info("Number of user visits: [{}]", count);
+            boolean isBanned = userService.getUserIsBanned(userId);
+            if (isBanned) {
+                return "Purchase failed, frequency limit exceeded";
+            }
+            stockLeft = seckillService.createVerifiedOrder(sid, userId, verifyHash);
+            log.info("Purchase succeeded, remaining inventory is: [{}]", stockLeft);
+        } catch (Exception e) {
+            log.error("Purchase failed：[{}]", e.getMessage());
+            return e.getMessage();
+        }
+        return String.format("Purchase succeeded, remaining inventory is：%d", stockLeft);
+    }
+
 }
