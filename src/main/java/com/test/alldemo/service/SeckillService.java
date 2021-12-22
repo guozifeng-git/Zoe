@@ -16,4 +16,6 @@ public interface SeckillService {
 
     void saleOptimisticStock(StockDO stock);
 
+    int createVerifiedOrder(Integer sid, Integer userId, String verifyHash);
+
 }

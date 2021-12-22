@@ -1,13 +1,18 @@
 package com.test.alldemo.service.impl;
 
+import com.test.alldemo.constants.Cachekey;
 import com.test.alldemo.entity.ErrorCodeEnum;
 import com.test.alldemo.entity.seckill.StockDO;
 import com.test.alldemo.entity.seckill.StockOrderDO;
+import com.test.alldemo.entity.seckill.UserDO;
 import com.test.alldemo.exception.CustomException;
 import com.test.alldemo.mapper.StockMapper;
 import com.test.alldemo.mapper.StockOrderMapper;
+import com.test.alldemo.mapper.UserMapper;
 import com.test.alldemo.service.SeckillService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Service
+@Slf4j
 public class SeckillServiceImpl implements SeckillService {
+
+    @Autowired
+    RedisTemplate<String,String> redisTemplate;
 
     @Autowired
     StockMapper stockMapper;
 
     @Autowired
     StockOrderMapper stockOrderMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public int createWrongOrder(int sid) {
@@ -76,5 +88,33 @@ public class SeckillServiceImpl implements SeckillService {
         if (integer != 1) {
             throw new CustomException(ErrorCodeEnum.TRY_ACQUIRE_FAIL);
         }
+    }
+
+    @Override
+    public int createVerifiedOrder(Integer sid, Integer userId, String verifyHash) {
+        String key = Cachekey.SECKILL+sid+":"+userId;
+        String verify = redisTemplate.opsForValue().get(key);
+        if (!verifyHash.equals(verify)){
+            throw new CustomException(ErrorCodeEnum.CHECK_FAIL);
+        }
+        log.info("The validity of hash value is verified successfully");
+
+        UserDO userDO = userMapper.selectById(userId);
+        if (userDO == null) {
+            throw new CustomException(ErrorCodeEnum.USER_DOES_NOT_EXIST);
+        }
+        log.info("User information：[{}]", userDO.toString());
+
+        StockDO stockDO = stockMapper.selectById(sid);
+        if (stockDO == null) {
+            throw new CustomException(ErrorCodeEnum.ITEM_DOES_NOT_EXIST);
+        }
+        log.info("Commodity information：[{}]", stockDO.toString());
+
+        saleOptimisticStock(stockDO);
+        log.info("Update mysql successfully");
+        int order = createOrder(stockDO);
+        log.info("Order created successfully");
+        return order;
     }
 }

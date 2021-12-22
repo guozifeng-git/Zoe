@@ -39,18 +39,18 @@ public class UserServiceImpl implements UserService {
         if (userDO == null) {
             throw new CustomException(ErrorCodeEnum.USER_DOES_NOT_EXIST);
         }
-        log.info("用户信息：[{}]", userDO.toString());
+        log.info("User information：[{}]", userDO.toString());
         StockDO stockDO = stockMapper.selectById(sid);
         if (stockDO == null) {
-            throw new CustomException(ErrorCodeEnum.STOCK_DOES_NOT_EXIST);
+            throw new CustomException(ErrorCodeEnum.ITEM_DOES_NOT_EXIST);
         }
-        log.info("商品信息：[{}]", stockDO.toString());
+        log.info("Commodity information：[{}]", stockDO.toString());
 
         String salt = SALT + sid + userId;
         String key = Cachekey.SECKILL + sid + ":" + userId;
         String value = DigestUtils.md5DigestAsHex(salt.getBytes(StandardCharsets.UTF_8));
         redisTemplate.opsForValue().set(key, value, 3600, TimeUnit.SECONDS);
-        log.info("Redis写入：[{}] [{}]", key, value);
+        log.info("Redis write in：[{}] [{}]", key, value);
         return value;
     }
 }

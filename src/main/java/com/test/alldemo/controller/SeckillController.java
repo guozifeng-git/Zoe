@@ -66,7 +66,10 @@ public class SeckillController {
         return String.format("Purchase succeeded, remaining inventory is：%d", surplusOrder);
     }
 
-
+    /**
+     * 获取验证值
+     * @return
+     */
     @GetMapping("/getVerifyHash")
     public String getVerifyHash(@RequestParam("sid") Integer sid,
                                 @RequestParam("userId") Integer userId) {
@@ -74,16 +77,30 @@ public class SeckillController {
         try {
             hash = userService.getVerifyHash(sid, userId);
         } catch (Exception e) {
-            log.error("获取验证hash失败，原因：[{}]", e.getMessage());
-            return "获取验证hash失败";
+            log.error("Failed to get validation hash, reason ：[{}]", e.getMessage());
+            return "Failed to get validation hash";
         }
-        return String.format("请求抢购验证hash值为：%s", hash);
+        return String.format("The hash value of the request for rush purchase verification is：%s", hash);
 
     }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
+    /**
+     * 要求验证的抢购接口
+     * @param sid
+     * @return
+     */
+    @GetMapping("/createOrderWithVerifiedUrl")
+    public String createOrderWithVerifiedUrl (@RequestParam("sid") Integer sid,
+                                              @RequestParam("userId") Integer userId,
+                                              @RequestParam("verifyHash") String verifyHash){
+        int stockLeft;
+        try {
+            stockLeft = seckillService.createVerifiedOrder(sid, userId, verifyHash);
+            log.info("Purchase succeeded, remaining inventory is: [{}]", stockLeft);
+        } catch (Exception e) {
+            log.error("Purchase failed：[{}]", e.getMessage());
+            return e.getMessage();
+        }
+        return String.format("Purchase succeeded, remaining inventory is：%d", stockLeft);
     }
 
 }
