@@ -22,6 +22,7 @@ public class SeckillController {
 
     /**
      * Guava令牌桶：每秒放行10个请求
+     * 只能单机限流，分布式限流用redis+lua脚本
      */
     RateLimiter rateLimiter = RateLimiter.create(33);
 
