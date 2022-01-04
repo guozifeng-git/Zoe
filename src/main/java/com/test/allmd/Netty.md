@@ -15,7 +15,7 @@
 
     CompositeByteBuf compositeByteBuf = Unpooled.compositeBuffer();
     compositeByteBuf.addComponents(true, header, body);
-![img_1.png](img_1.png)
+![img_1.png](png/img_1.png)
 CompositeByteBuf 只是逻辑上是一个整体.
 ###通过 wrap 操作实现零拷贝
     byte[] bytes = ...
@@ -31,7 +31,7 @@ CompositeByteBuf 只是逻辑上是一个整体.
     ByteBuf header = byteBuf.slice(0, 5);
     ByteBuf body = byteBuf.slice(5, 10);
 用 slice 方法产生 header 和 body 的过程是没有拷贝操作的, header 和 body 对象在内部其实是共享了 byteBuf 存储空间的不同部分而已
-![img_2.png](img_2.png)
+![img_2.png](png/img_2.png)
 ###通过 FileRegion 实现零拷贝
 Netty 中使用 FileRegion 实现文件传输的零拷贝, 不过在底层 FileRegion 是依赖于 Java NIO FileChannel.transfer 的零拷贝功能.
 
