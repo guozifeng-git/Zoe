@@ -1,6 +1,7 @@
 package com.test.alldemo.entity.seckill;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

@@ -17,6 +17,7 @@ public class GenericClass<T> {
         System.out.println(integerNode.getValue());
         GenericClass<String> stringNode = new GenericClass<String>("test");
         System.out.println(stringNode.getValue());
+
     }
 }
 

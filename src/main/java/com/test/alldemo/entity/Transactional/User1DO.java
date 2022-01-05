@@ -9,4 +9,5 @@ public class User1DO {
     @TableId(value="id",type= IdType.AUTO)
     private Integer id;
     private String name;
+
 }
