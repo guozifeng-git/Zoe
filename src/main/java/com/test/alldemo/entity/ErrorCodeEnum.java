@@ -13,9 +13,10 @@ public enum ErrorCodeEnum {
     //
     STOCK_NOT_ENOUGH("1","Insufficient inventory"),
     TRY_ACQUIRE_FAIL("2","Failed to acquire lock"),
-    USER_DOES_NOT_EXIST("3","user does not exist"),
+    USER_DOES_NOT_EXIST("3","User does not exist"),
     ITEM_DOES_NOT_EXIST("4","Item does not exist"),
-    CHECK_FAIL("5","Redis check failed")
+    CHECK_FAIL("5","Redis check failed"),
+    SUCCESS("6","Success")
     ;
 
     @EnumValue

@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public String getVerifyHash(Integer sid, Integer userId) {
         UserDO userDO = userMapper.selectById(userId);
         if (userDO == null) {
-            throw new CustomException(ErrorCodeEnum.USER_DOES_NOT_EXIST);
+            throw new CustomException(ErrorCodeEnum.USER_DOES_NOT_EXIST,"不存在");
         }
         log.info("User information：[{}]", userDO.toString());
         StockDO stockDO = stockMapper.selectById(sid);

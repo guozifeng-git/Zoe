@@ -1,6 +1,7 @@
 package com.test.alldemo.service.impl;
 
 import com.test.alldemo.constants.Cachekey;
+import com.test.alldemo.domain.StockDTO;
 import com.test.alldemo.entity.ErrorCodeEnum;
 import com.test.alldemo.entity.seckill.StockDO;
 import com.test.alldemo.entity.seckill.StockOrderDO;
@@ -36,14 +37,16 @@ public class SeckillServiceImpl implements SeckillService {
     UserMapper userMapper;
 
     @Override
-    public int createWrongOrder(int sid) {
+    public StockDTO createWrongOrder(int sid) {
+        StockDTO stockDTO = new StockDTO();
         //校验库存
         StockDO stock = checkStock(sid);
         //扣库存
         saleStock(stock);
         //创建订单
         int id = createOrder(stock);
-        return id;
+        stockDTO.setId(id);
+        return stockDTO;
     }
 
     @Override

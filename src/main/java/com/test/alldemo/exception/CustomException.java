@@ -7,6 +7,7 @@ import lombok.Getter;
  * @author admin
  */
 public class CustomException extends RuntimeException{
+    private static final long serialVersionUID = 4586120992784148945L;
     @Getter
     private final String code;
 

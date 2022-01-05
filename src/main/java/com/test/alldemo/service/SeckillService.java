@@ -1,10 +1,11 @@
 package com.test.alldemo.service;
 
 
+import com.test.alldemo.domain.StockDTO;
 import com.test.alldemo.entity.seckill.StockDO;
 
 public interface SeckillService {
-    int createWrongOrder(int sid);
+    StockDTO createWrongOrder(int sid);
 
     StockDO checkStock(int sid);
 

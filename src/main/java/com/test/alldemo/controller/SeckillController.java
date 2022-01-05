@@ -1,6 +1,8 @@
 package com.test.alldemo.controller;
 
 import com.google.common.util.concurrent.RateLimiter;
+import com.test.alldemo.base.generic.ResponseResult;
+import com.test.alldemo.domain.StockDTO;
 import com.test.alldemo.service.SeckillService;
 import com.test.alldemo.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -33,15 +35,16 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/createWrongOrder")
-    public String createWrongOrder(@RequestParam("sid") int sid) {
+    public ResponseResult createWrongOrder(@RequestParam("sid") int sid) {
         int id = 0;
         try {
-            id = seckillService.createWrongOrder(sid);
+            StockDTO wrongOrder = seckillService.createWrongOrder(sid);
             log.info("Create orderId: [{}]", id);
+            return ResponseResult.success(wrongOrder);
         } catch (Exception e) {
             log.error("Exception", e);
         }
-        return String.valueOf(id);
+        return null;
     }
 
     /**
@@ -51,10 +54,10 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/createOptimisticOrder")
-    public String createOptimisticOrder(@RequestParam("sid") int sid) {
+    public ResponseResult createOptimisticOrder(@RequestParam("sid") int sid) {
         if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
             log.warn("Current limit, return failure");
-            return "Purchase failure, insufficient inventory";
+            return ResponseResult.failure("4xx","Current limit, return failure");
         }
         int surplusOrder;
         try {
@@ -62,9 +65,9 @@ public class SeckillController {
             log.info("Purchase succeeded, remaining inventory is: [{}]", surplusOrder);
         } catch (Exception e) {
             log.error("Purchase failed：[{}]", e.getMessage());
-            return "Purchase failure, insufficient inventory";
+            return ResponseResult.failure("4xx",e.getMessage());
         }
-        return String.format("Purchase succeeded, remaining inventory is：%d", surplusOrder);
+        return ResponseResult.success(surplusOrder);
     }
 
     /**

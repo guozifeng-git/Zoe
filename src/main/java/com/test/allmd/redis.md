@@ -116,3 +116,4 @@ ziplist压缩列表是内存地址连续，元素之间紧凑存储，功能类�
     quicklistNode *next;
     ziplist *zl;// 压缩列表
 
+https://laker.blog.csdn.net/article/details/110636513?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&utm_relevant_index=1
