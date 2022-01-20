@@ -12,7 +12,7 @@ func SetUpRoute() *gin.Engine {
 	{
 		group.GET("", retHelloGinAndMethod)
 	}
-	router.GET("/user/:name", handler.Save)
+	router.POST("/:email/:password", handler.Save)
 	return router
 }
 func retHelloGinAndMethod(context *gin.Context) {
