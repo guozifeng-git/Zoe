@@ -1,0 +1,3 @@
+2022-01-24 16:19:37.478 [main] INFO  com.gzf.messageweb.MessageWebApplicationTests - Starting MessageWebApplicationTests using Java 1.8.0_311 on bogon with PID 5046 (started by admin in /Users/admin/IdeaProjects/alldemo/message-web)
+2022-01-24 16:19:37.479 [main] INFO  com.gzf.messageweb.MessageWebApplicationTests - No active profile set, falling back to default profiles: default
+2022-01-24 16:19:39.533 [main] INFO  com.gzf.messageweb.MessageWebApplicationTests - Started MessageWebApplicationTests in 3.095 seconds (JVM running for 5.037)
