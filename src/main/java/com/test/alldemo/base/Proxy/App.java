@@ -8,10 +8,5 @@ import com.test.alldemo.entity.Transactional.User1DO;
 public class App {
     public static void main(String[] args) {
 
-        XiaoMing userDao = new XiaoMing();
-
-        XiaoMing factory = (XiaoMing) new ProxyFactory(userDao).getProxyInstance();
-
-        factory.sing("xxx");
     }
 }

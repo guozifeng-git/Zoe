@@ -1,6 +1,5 @@
-package com.test.alldemo.base.generic;
+package com.test.alldemo.common;
 
-import com.test.alldemo.entity.ErrorCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;

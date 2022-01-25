@@ -1,2 +1,8 @@
-package dto;public class MiniProgramContentModel {
+package dto;
+
+/**
+ * 小程序
+ * @author gzf
+ */
+public class MiniProgramContentModel extends ContentModel{
 }

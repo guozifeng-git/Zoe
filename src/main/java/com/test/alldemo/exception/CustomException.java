@@ -1,6 +1,6 @@
 package com.test.alldemo.exception;
 
-import com.test.alldemo.entity.ErrorCodeEnum;
+import com.test.alldemo.common.ErrorCodeEnum;
 import lombok.Getter;
 
 /**

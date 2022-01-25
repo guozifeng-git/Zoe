@@ -1,2 +1,4 @@
-package com.test.alldemo.controller;public class RocketMqTest {
+package com.test.alldemo.controller;
+
+public class RocketMqTest {
 }

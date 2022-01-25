@@ -1,4 +1,4 @@
-package com.test.alldemo.entity;
+package com.test.alldemo.common;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;

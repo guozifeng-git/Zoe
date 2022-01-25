@@ -1,7 +1,7 @@
 package com.test.alldemo.controller;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.test.alldemo.base.generic.ResponseResult;
+import com.test.alldemo.common.ResponseResult;
 import com.test.alldemo.domain.StockDTO;
 import com.test.alldemo.service.SeckillService;
 import com.test.alldemo.service.impl.UserServiceImpl;

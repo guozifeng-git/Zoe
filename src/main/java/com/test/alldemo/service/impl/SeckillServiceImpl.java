@@ -2,7 +2,7 @@ package com.test.alldemo.service.impl;
 
 import com.test.alldemo.constants.Cachekey;
 import com.test.alldemo.domain.StockDTO;
-import com.test.alldemo.entity.ErrorCodeEnum;
+import com.test.alldemo.common.ErrorCodeEnum;
 import com.test.alldemo.entity.seckill.StockDO;
 import com.test.alldemo.entity.seckill.StockOrderDO;
 import com.test.alldemo.entity.seckill.UserDO;

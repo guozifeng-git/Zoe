@@ -1,4 +1,4 @@
-package com.test.alldemo.tool;
+package com.test.alldemo.common;
 
 import java.time.Duration;
 
