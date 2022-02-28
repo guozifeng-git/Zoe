@@ -11,6 +11,19 @@
 
     <artifactId>message-handler</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.test</groupId>
+            <artifactId>message-support</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.test</groupId>
+            <artifactId>message-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

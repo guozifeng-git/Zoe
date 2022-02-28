@@ -1,6 +1,5 @@
-package com.java3y.austin.pipeline;
+package utils.pipeline;
 
-import com.java3y.austin.vo.BasicResultVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.experimental.Accessors;
 /**
  * 责任链上下文
  *
- * @author 3y
+ * @author gzf
  */
 @Data
 @AllArgsConstructor
@@ -37,6 +36,6 @@ public class ProcessContext {
     /**
      * 流程处理的结果
      */
-    BasicResultVO response;
+//    BasicResultVO response;
 
 }
