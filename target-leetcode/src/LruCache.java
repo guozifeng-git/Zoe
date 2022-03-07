@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author gzf
@@ -21,5 +19,4 @@ public class LruCache<K,V> extends LinkedHashMap<K,V> {
         //当map中的数据量大于指定缓存个数时，就自动删除最老的数据
         return size() > CACHE_SIZE;
     }
-
 }
